@@ -1,5 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException, Request
-from . import models
+import models
 from database import engine
 from routers import auth, todos, admin ,users
 
