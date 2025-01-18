@@ -1,5 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException, Request, status
-from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
+
 from fastapi.middleware.cors import CORSMiddleware
 import models
 from database import engine
@@ -22,6 +22,12 @@ app.include_router(todos.router)
 app.include_router(admin.router)
 app.include_router(users.router)
 
-app.add_middleware(HTTPSRedirectMiddleware)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permet toutes les origines (vous pouvez spécifier des URLs spécifiques ici)
+    allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"],  
+)
 
 
