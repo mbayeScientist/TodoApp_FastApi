@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Annotated, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
-
+from pathlib import Path
 from pydantic import BaseModel, Field
 from models import Users
 from passlib.context import CryptContext
@@ -10,6 +10,8 @@ from sqlalchemy.orm import Session
 from database import SessionLocal
 from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
 from jose import JWTError, jwt
+from fastapi import APIRouter , Depends , HTTPException , Request
+from fastapi.templating import Jinja2Templates
 
 SECRET_KEY= "8ed0aedc8e6e6aed1628c9427cc3976f019a86a59f3236267e7de7f7b28767e2"
 ALGORITHM = "HS256"
@@ -31,15 +33,29 @@ def get_db():
         db.close()
         
 dependencies = Annotated[Session, Depends(get_db)]
+templates = Jinja2Templates(directory=str(Path(__file__).parent / "../templates"))
+
+
+### Pagees###
+@router.get("/login-page")
+def render_login_page(request:Request):
+    return templates.TemplateResponse("login.html" , {"request": request})
+
+@router.get("/register-page")
+def render_register_page(request:Request):
+    return templates.TemplateResponse("register.html" , {"request": request})
+
+
+###templates
 #classe pydantic pour la creation d'un utilisateur
 class UserCreate(BaseModel):
     email: str = Field(min_length=1, max_length=100)
     username: str = Field(min_length=1, max_length=100)
     first_name: str = Field(min_length=1, max_length=100)
     last_name: str = Field(min_length=1, max_length=100)
-    paassword: str = Field(min_length=1)
+    password: str = Field(min_length=1)
     role: str = Field(min_length=1, max_length=100)
-    is_active: bool
+    is_active:  Optional[bool] = True
 #creation d'une classe toekn
 class Token(BaseModel):
     access_token: str
@@ -54,7 +70,7 @@ def create_user(db:dependencies,user : UserCreate):
         username=user.username,
         first_name=user.first_name,
         last_name=user.last_name,
-        hashed_password=bcrypt.hash(user.paassword),
+        hashed_password=bcrypt.hash(user.password),
         role=user.role,
         is_active=True
     )
