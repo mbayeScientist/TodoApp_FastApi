@@ -19,7 +19,7 @@ app.include_router(users.router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permet toutes les origines (vous pouvez spécifier des URLs spécifiques ici)
+    allow_origins=["http://localhost:3000"],  # Permet toutes les origines (vous pouvez spécifier des URLs spécifiques ici)
     allow_credentials=True,
     allow_methods=["*"],  
     allow_headers=["*"],  
