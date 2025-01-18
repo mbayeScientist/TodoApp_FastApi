@@ -151,7 +151,7 @@
                     // Delete any cookies available
                     logout();
                     // Save token to cookie
-                    document.cookie = `access_token=${data.access_token}; path=https://todoappfastapi-production.up.railway.app/`;
+                    document.cookie = `access_token=${data.access_token}; path=/`;
                     window.location.href = '/todos/todo-page'; // Change this to your desired redirect page
                 } else {
                     // Handle error
