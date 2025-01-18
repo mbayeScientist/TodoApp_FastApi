@@ -137,7 +137,7 @@
             }
 
             try {
-                const response = await fetch('https://todoappfastapi-production.up.railway.app/auth/token/', {
+                const response = await fetch('/auth/token/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -151,7 +151,7 @@
                     // Delete any cookies available
                     logout();
                     // Save token to cookie
-                    document.cookie = `access_token=${data.access_token}; path=/`;
+                    document.cookie = `access_token=${data.access_token}; path=https://todoappfastapi-production.up.railway.app/`;
                     window.location.href = '/todos/todo-page'; // Change this to your desired redirect page
                 } else {
                     // Handle error
