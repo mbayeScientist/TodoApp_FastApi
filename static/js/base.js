@@ -147,7 +147,7 @@
                     },
                     body: payload.toString()
                 });
-
+                console.log(response);
                 if (response.ok) {
                     // Handle success (e.g., redirect to dashboard)
                     const data = await response.json();
