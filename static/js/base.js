@@ -124,12 +124,13 @@
 
     // Login JS
     const loginForm = document.getElementById('loginForm');
+    console.log("JavaScript fonctionne !");
     if (loginForm) {
         
         loginForm.addEventListener('submit', async function (event) {
             
             event.preventDefault();
-            console.log("JavaScript fonctionne !");
+            
             const form = event.target;
             const formData = new FormData(form);
 
